@@ -3,10 +3,10 @@ const getForeCastWeatherData = async (city) => {
   const res = await fetch(url)
 
   if (!res.ok) {
-    throw new Error(`${res.status}`)
+    return 'Incorrect city name: City not found.'
+  } else {
+    return res.json()
   }
-
-  return res.json()
 }
 
 const getCurrentWeatherData = async (city) => {
@@ -14,10 +14,10 @@ const getCurrentWeatherData = async (city) => {
   const res = await fetch(url)
 
   if (!res.ok) {
-    throw new Error(`${res.status}`)
+    return 'Incorrect city name: City not found.'
+  } else {
+    return res.json()
   }
-
-  return res.json()
 }
 
 export {getForeCastWeatherData, getCurrentWeatherData}
