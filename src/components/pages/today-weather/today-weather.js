@@ -10,42 +10,56 @@ class TodayWeather extends Component{
     currentWeather: {}
   }
 
+  generateKey = () => Math.random().toString(36).substr(6)
+
   queryForeCastWeather = () => {
     getForeCastWeatherData(this.props.cityName)
         .then(res => {
-              const list = res.list
-              const newArr = []
-              list.forEach((item, i) => {
-                if (i > -1 && i < 8) {
-                  newArr.push(
-                      <ListItem time={item.dt_txt.split(' ')[1]}
-                                temp={Math.round(item.main.temp -273.15)}
-                                wind={item.wind.speed}
-                                windDirection={item.wind.deg}
-                                humidity={item.main.humidity}
-                                weather={item.weather[0].main}
-                                weatherIcon={`https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
-                      />)
-                }
-              })
+          console.log(res)
+          if (res.cod === '200') {
+            const list = res.list
+            const newArr = []
+            list.forEach((item, i) => {
+              if (i > -1 && i < 8) {
+                newArr.push(
+                    <ListItem key={this.generateKey()}
+                              time={item.dt_txt.split(' ')[1]}
+                              temp={Math.round(item.main.temp -273.15)}
+                              wind={item.wind.speed}
+                              windDirection={item.wind.deg}
+                              humidity={item.main.humidity}
+                              weather={item.weather[0].main}
+                              weatherIcon={`https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
+                    />)
+              }
+            })
+            return newArr
+          }
+          else {
+            return <span className="city-name-error">Incorrect city name: City not found.</span>
+          }
 
-              return newArr
-            }
-        )
-        .then(arr => this.setState({todayWeather: arr}))
+        })
+        .then(data => this.setState({todayWeather: data}))
+        .catch(err => alert(`Error! ${err}. Please retry.`))
   }
 
   queryCurrentWeather = () => {
     getCurrentWeatherData(this.props.cityName)
         .then(res => {
-          const newObj = {
-            temp: Math.round(res.main.temp - 273.15),
-            weather: `${res.weather[0].main} - ${res.weather[0].description}`,
-            weatherIcon: `https://openweathermap.org/img/wn/${res.weather[0].icon}@2x.png`
+          if (res.cod === 200) {
+            const newObj = {
+              temp: Math.round(res.main.temp - 273.15),
+              weather: `${res.weather[0].main} - ${res.weather[0].description}`,
+              weatherIcon: `https://openweathermap.org/img/wn/${res.weather[0].icon}@2x.png`
 
+            }
+
+            return newObj
           }
-
-          return newObj
+          else {
+            return {}
+          }
         })
         .then(obj => this.setState({currentWeather: obj}))
   }

@@ -9,14 +9,18 @@ class FivedayWeather extends Component{
     fivedayWeather: []
   }
 
+  generateKey = () => Math.random().toString(36).substr(6)
+
   queryForeCastWeather = () => {
     getForeCastWeatherData(this.props.cityName)
         .then(res => {
+            if (res.cod === '200') {
               const list = res.list
               const newArr = []
               list.forEach((item, i) => {
                   newArr.push(
-                      <ListItem time={item.dt_txt}
+                      <ListItem key={this.generateKey()}
+                                time={item.dt_txt}
                                 temp={Math.round(item.main.temp -273.15)}
                                 wind={item.wind.speed}
                                 windDirection={item.wind.deg}
@@ -27,9 +31,14 @@ class FivedayWeather extends Component{
               })
               return newArr
             }
-        )
-        .then(arr => this.setState({fivedayWeather: arr}))
+            else {
+              return <span className="city-name-error">Incorrect city name: City not found.</span>
+            }
+        })
+        .then(data => this.setState({fivedayWeather: data}))
+        .catch(err => alert(`Error! ${err}. Please retry.`))
   }
+
 
   componentDidMount() {
     this.queryForeCastWeather()
