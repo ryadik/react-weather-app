@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route, NavLink} from "react-router-dom";
 
 import LinkItem from "../weather-page/link-item/link-item";
 import TodayWeather from "../pages/today-weather/today-weather";
@@ -17,13 +17,15 @@ export default class WeatherPage extends Component {
     ]
   }
 
+  generateKey = () => Math.random().toString(36).substr(6)
+
   render() {
     const {cityName} = this.props
     const {links} = this.state
 
     console.log(cityName)
 
-    const btnLinks = links.map(item => <LinkItem text={item.text} color={item.color} classes={item.classes} url={item.url}/>)
+    const btnLinks = links.map(item => <LinkItem key={this.generateKey()} text={item.text} color={item.color} classes={item.classes} url={item.url}/>)
 
     return (
         <View elems={btnLinks} cityName={cityName}/>
@@ -34,6 +36,7 @@ export default class WeatherPage extends Component {
 const View = ({elems, cityName}) => {
   return (
       <div className="weather-page">
+        <NavLink className="weather-page__back-button" to='/'><span>&#10148;</span></NavLink>
         <h1 className="weather-page__title weather-page__city-name">{cityName}</h1>
 
     <Router>
