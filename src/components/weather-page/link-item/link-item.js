@@ -8,7 +8,7 @@ const LinkItem = ({text, color, classes, url}) => {
 
   return (
       <div className={classList}>
-        <button style={{backgroundColor: color}}><NavLink to={url}>{text}</NavLink></button>
+        <NavLink to={url}><button style={{backgroundColor: color}}>{text}</button></NavLink>
       </div>
   )
 }
