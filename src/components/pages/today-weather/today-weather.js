@@ -11,7 +11,7 @@ class TodayWeather extends Component{
   }
 
   queryForeCastWeather = () => {
-    getForeCastWeatherData()
+    getForeCastWeatherData(this.props.cityName)
         .then(res => {
               const list = res.list
               const newArr = []
@@ -36,7 +36,7 @@ class TodayWeather extends Component{
   }
 
   queryCurrentWeather = () => {
-    getCurrentWeatherData()
+    getCurrentWeatherData(this.props.cityName)
         .then(res => {
           const newObj = {
             temp: Math.round(res.main.temp - 273.15),

@@ -10,7 +10,7 @@ class TomorrowWeather extends Component{
   }
 
   queryForeCastWeather = () => {
-    getForeCastWeatherData()
+    getForeCastWeatherData(this.props.cityName)
         .then(res => {
               const list = res.list
               const newArr = []
