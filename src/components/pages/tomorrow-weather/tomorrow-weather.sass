@@ -1,0 +1,42 @@
+.tomorrow-weather
+  &__current-weather
+    display: flex
+    justify-content: center
+    align-items: center
+    margin-bottom: 20px
+
+    span
+      font-size: 55px
+      font-weight: bold
+      color: #fff
+      margin-left: 10px
+  .weather-list
+    &__item
+      &-text
+        margin: 0
+        padding: 10px 0
+
+        display: flex
+        justify-content: space-between
+        align-items: center
+
+        border-top: 3px solid #4527A0
+
+        .data
+          width: 400px
+          display: flex
+          justify-content: space-between
+          align-items: center
+
+          img
+            width: 60px
+
+        span
+          color: #fff
+          font-size: 30px
+
+    &__item:first-child
+      .weather-list__item-text
+        border-top: none
+
+
